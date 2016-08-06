@@ -26,41 +26,43 @@
 
         <!-- NOTE: "name" attribute in input component affects radio buttons check/un-check -->
         <div class="container">
-            <h4><strong><u>QUESTION <span id="qid">1</span></u>: <span id="question"></span></strong></h4>
+            <h4><strong><u>QUESTION <span id="number">1</span></u>: <span id="question">question#.display()</span></strong></h4>
             <form role="form">
                 <div class="radio">
                     <label>
                         <input type="radio" id="user-choice1" name="radio-group">
-                        <span id="ans1">CobiT is a model for IT governance, whereas ITIL is a model for corporate governance.</span>
+                        <span id="opt1"></span>
                     </label>
                 </div>
                 <div class="radio">
                     <label>
                         <input class="form-check-input" type="radio" id="user-choice2" name="radio-group">
-                        <span id="ans2">CobiT provides a corporate governance roadmap, whereas ITIL is a customizable framework for IT service management.</span>
+                        <span id="opt2"></span>
                     </label>
                 </div>
                 <div class="radio">
                     <label>
                         <input class="form-check-input" type="radio" id="user-choice3" name="radio-group">
-                        <span id="ans3">CobiT defines IT goals, whereas ITIL provides the process-level steps on how to achieve them.<br></span>
+                        <span id="opt3"><br></span>
                     </label>
                 </div>
                 <div class="radio">
                     <label>
                         <input class="form-check-input" type="radio" id="user-choice4" name="radio-group">
-                        <span id="ans4">CobiT provides a framework for achieving security goals, whereas ITIL defines a framework for achieving IT service-level goals.</span>
+                        <span id="opt4"></span>
                     </label>
                 </div>
                 <div class="radio">
                     <label>
-                        <input class="form-check-input" type="radio" id="user-choice4" name="radio-group">
-                        <span id="ans4">CobiT provides a framework for achieving security goals, whereas ITIL defines a framework for achieving IT service-level goals.</span>
+                        <input class="form-check-input" type="radio" id="user-choice5" name="radio-group">
+                        <span id="opt5"></span>
                     </label>
                 </div>
             </form>
         </div>
-        <div class="text-center"><a class="btn btn-lg btn-success" href="#" id="btn_submit">Submit</a></div>
+        <div class="text-center">
+            <a class="btn btn-lg btn-success" href="#" id="btn_submit">Submit</a>
+        </div>
         <div class="footer text-center">
             <span id="msg"></span>
             <span id="progress">Question #<b><span id="current-record">1</span> / 10</b></span>

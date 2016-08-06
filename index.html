@@ -15,16 +15,31 @@
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
-	<main>
-        <div class="jumbotron text-center">
+	<!-- Welcome Page -->
+        <div id="welcome" class="jumbotron text-center">
         	<!-- insert intro. video or alma mater audio clip -->
+        	<h1>Welcome to the Quiz</h1>
         </div>
         <div class="text-center">
-            <a class="btn btn-lg btn-success" href="html/quizform.html">Game On!</a>
+            <a id="btn_start" class="btn btn-lg btn-success">Game On!</a>
         </div>
-    </main>
 
+    <!-- Quiz -->
+    	<div = id="quiz_container" class="container">
+    		<!-- look up Bootstrap for forms -->
+    		<form id="quiz_form" role='form'>	
+    			
+    		</form>
+    		<div class="text-center">
+            <a id="btn_submit" class="btn btn-lg btn-success">Submit</a>
+        </div>
+    	</div>
+    	
 
+    <!-- Highscore -->
+    	<div id="highscore_container" class="container">
+    		
+    	</div>
   
 <!-- Scripts -->
 	<!-- jQuery Library -->
