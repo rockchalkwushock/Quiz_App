@@ -6,29 +6,27 @@
 *	3)	Objects
 *	4)	Parent Function
 *	5)	Child Functions
-*			a) 
-*			b) 
-*			c) 
+*			a)
+*			b)
+*			c)
 *	6)	Sibiling Functions
-*			a) 
-*           b) 
-*           c) 
+*			a)
+*           b)
+*           c)
 */
 
-// ####################################################
-/* ---------- Initialization of Variables ---------- */
-// ####################################################
+// ###########################################################
+/* ---------- Initialization of Global Variables ---------- */
+// ###########################################################
 
-var counter = 0;							// This will count how many questions have been answered.
- 
+var counter = 0;																																// This will count how many questions have been answered.
+var userGuess = $('input:checked').val(); 																			// Stores user's radio value input.
+var myQuestions;																																// New Object created from the prototype of object 'QuizBank'.
+
 // ##############################################################
 /* -------------------- Classes & Objects -------------------- */
 // ##############################################################
 
-
-// ####################################################
-/* -------------------- Objects -------------------- */
-// ####################################################
 
 
 // ####################################################
@@ -40,69 +38,84 @@ $(document).ready(initLoad);
 // ####################################################
 /* ----------------- Child Function ---------------- */
 // ####################################################
-
 function initLoad()
 {
-	console.log('page load');
+	// console.log('page load');
 	welcome();
 };
 
 function welcome()
 {
 	$('#welcome').show();							// div containing Welcome Page and pics possibly intro video
-	console.log('welcome page visible');
+	// console.log('welcome page visible');
 	$('#btn_start').show();							// button for user to leave Welcome Page & Start Quiz
-	console.log('start quiz btn visible');
+	// console.log('start quiz btn visible');
 	$('#quiz_container').hide();					// contains quiz form
-	console.log('quiz container hidden');
+	// console.log('quiz container hidden');
 	$('#scoreboard_container').hide();				// contains scoreboard that tracks user score during quiz
-	console.log('highscore container hidden');
+	// console.log('scoreboard container hidden');
 	$('#highscore_container').hide();				// contains high score upon completing quiz
-	console.log('highscore container hidden');
+	// console.log('highscore container hidden');
 
 
 	$('#btn_start').click(function()
 	{
 		$('#welcome').hide();
-		console.log('welcome page hidden');
+		// console.log('welcome page hidden');
 		$('#quiz_container').show()
-		console.log('quiz container visible');
-		populateForm();
+		// console.log('quiz container visible');
+		runGame();
 	});
 };
 
+function runGame()
+{
+	console.log('running game');
+	populateForm();																																// Appends question number, radio buttons, & answers to form in index.html.
+	checkUsersAnswer();
+}
+
 function populateForm()
 {
-	$('#questionNum').text(/* obj.q_num */);
-		console.log('question number');
-        // $('#quiz_form').text('');
-        // console.log('text box cleared');
-        $('#quiz_form').append('<h2>' + 'gibberish'/* obj.question */ + '</h2>');
-        console.log('question');
-        $('#quiz_form').append("<input type='radio' value='0' name='answer'><span>" + 1/* obj.answer[0] */ + "</span><br/>");
-        console.log('answer1');
-        $('#quiz_form').append("<input type='radio' value='1' name='answer'><span>" + 2/* obj.answer[1] */ + "</span><br/>");
-        console.log('answer2');
-        $('#quiz_form').append("<input type='radio' value='2' name='answer'><span>" + 3/* obj.answer[2] */ + "</span><br/>");
-        console.log('answer3');
-        $('#quiz_form').append("<input type='radio' value='3' name='answer'><span>" + 4/* obj.answer[3] */ + "</span>");
-        console.log('answer4');
-        
-};
-
-function getUserAnswer()
-{
-
+	myQuestions = new QuestionList(QuizBank);																			// Creates new object 'myQuestions' from the prototype of object 'QuizBank'.
+  myQuestions.fetchCurrentQuestion();																						// Fetches current question in array (object) 'QuizBank'.
 };
 
 function checkUsersAnswer()
 {
+  $('#btn_submit').click(function()
+  {
+		userGuess=$('input:checked').val();
+		console.log(userGuess);
+		if (userGuess == undefined)																									// User did not select an option.
+    {
+      // no input from user
+      alert("You must pick an answer!");
+    }
+		else if(userGuess == myQuestions.currentQuestion.correctAnswerIndex)				// User's guess matches correctAnswerIndex.
+    {
+      // correct answer
+      alert("You guessed correctly!");																					// Prompt user with success.
+			nextQuestion();																														// Advance to next question.
+    }
+    else if (userGuess != myQuestions.currentQuestion.correctAnswerIndex)				// User's guess does not match correctAnswerIndex.
+    {
+      // not correct answer
+      alert("You guessed incorrectly!");																				// Prompt user with failure.
+			nextQuestion();																														// Advance to next question.
+    }
+  })
+};
 
+function nextQuestion()
+{
+	myQuestions.nextIndex();																							      	// Iterate +1 in QuizBank array.
+	myQuestions.fetchCurrentQuestion();																				    // Fetch next question in QuizBank array.
 };
 
 function resetForm()
 {
-	
+
 };
 
 function counter()
@@ -124,7 +137,7 @@ function highScore()
 
 function newGame()
 {
-	$('#btn_new').click(function() 
+	$('#btn_new').click(function()
 	{
         $('#highscore_container').hide();
         resetForm();
@@ -134,21 +147,3 @@ function newGame()
 // ####################################################
 /* ---------------- Sibling Function --------------- */
 // ####################################################
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
