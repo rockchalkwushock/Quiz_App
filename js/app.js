@@ -2,35 +2,41 @@
 /*
 *	Table of Contents
 *	1)	Initialization of Variables
-*	2)	Classes
-*	3)	Objects
-*	4)	Parent Function
-*	5)	Child Functions
-*			a)
-*			b)
-*			c)
-*	6)	Sibiling Functions
-*			a)
-*           b)
-*           c)
+*	2)	Parent Function
+*	3)	initLoad Function
+*	4)	welcome Function
+*	5)	buttonAction Function
+*	6)	populateForm Function
+*	7)	checkUsersAnswer Function
+*	8)	nextQuestion Function
+*	9)	highScore Function
+*	10)	newGame Function
+* 11)	resetForm Function
+* 12)	scoreBoard Function
 */
+
+/*
+      Unresolved Issues
+      1) Still have not included JS for scoreBoard.
+      2) Randomization function for array of questions.
+      3) Randomization function for array of answers.
+      4) Add to QuizBank array. (data.js)
+      5) Clean up & comment constructor. (constructor.js)
+*/
+
 
 // ###########################################################
 /* ---------- Initialization of Global Variables ---------- */
 // ###########################################################
 
-//var counter = 0;																																// This will count how many questions have been answered.
-var userGuess = $('input[name=answer]:checked').val(); 													// Variable represents the radio button value from user's selection.
+var input = $('input[name=answer]:checked');        												    // Variable represents the radio button value from user's selection.
+var userInput;                                                                  // Variable represents the stored radio button value as a string.
+var userGuess;                                                                  // Variable represents the stored radio button value as an integer.
 var userFeedback = $('#userFeedback_container')																	// Variable represents the user feedback from processed selection.
-var myQuestions;																																// New Object created from the prototype of object 'QuizBank'.
+var myQuestions;																																// Declare new object created from the prototype of object 'QuizBank'.
 var kansasScore = 0;																														// Placeholder for winning team score.
 var mizzouScore = 0;																														// Placeholder for losing team score.
-
-// ##############################################################
-/* -------------------- Classes & Objects -------------------- */
-// ##############################################################
-
-
+var delay	= 1500;																																// 1.5 second delay from last user feedback prompt to highscore_container becoming visible.
 
 // ####################################################
 /* ---------------- Parent Function ---------------- */
@@ -41,10 +47,11 @@ $(document).ready(initLoad);
 // #######################################################
 /* ----------------- initLoad Function ---------------- */
 // #######################################################
-function initLoad()
+function initLoad()                                                             // Runs the initial load of content to page.
 {
 	// console.log('page load');
-	welcome();
+	welcome();                                                                    // Calls welcome function.
+	buttonAction();                                                               // Calls buttonAction function.
 };
 
 // ######################################################
@@ -53,47 +60,57 @@ function initLoad()
 
 function welcome()
 {
-	$('#welcome').show();																													// div containing Welcome Page and pics possibly intro video
+	$('#welcome').show();																													// Shows Welcome Page.
 	// console.log('welcome page visible');
-	$('#btn_start').show();																												// button for user to leave Welcome Page & Start Quiz
+	$('#btn_start').show();																												// Shows button on Welcome Page that will start the quiz.
 	// console.log('start quiz btn visible');
-	$('#quiz_container').hide();																									// contains quiz form
+	$('#quiz_container').hide();																									// Hides the quiz_container.
 	// console.log('quiz container hidden');
-	$('#scoreboard_container').hide();																						// contains scoreboard that tracks user score during quiz
+	$('#scoreboard_container').hide();																						// Hides the scoreboard_container.
 	// console.log('scoreboard container hidden');
-	$('#highscore_container').hide();																							// contains high score upon completing quiz
+	$('#highscore_container').hide();																							// Hides the highscore_container.
 	// console.log('highscore container hidden');
-	$('#userFeedback_container').hide();																					// contains user feedback to answer (pop up fades)
+	$('#userFeedback_container').hide();																					// Hides the userFeedback_container.
 	// console.log('user feedback container hidden');
 
 
 	$('#btn_start').click(function()
 	{
-		$('#welcome').hide();
+		$('#welcome').hide();                                                       // Hides Welcome Page.
 		// console.log('welcome page hidden');
-		$('#quiz_container').show()
+		$('#quiz_container').show()                                                 // Shows the quiz_container.
 		// console.log('quiz container visible');
-		runGame();
+		populateForm();                                                             // Call populateForm function.
 	});
 };
 
-// ######################################################
-/* ----------------- runGame Function ---------------- */
-// ######################################################
+// ###########################################################
+/* ----------------- buttonAction Function ---------------- */
+// ###########################################################
 
-function runGame()
+function buttonAction()                                                         // Handles submission of form upon event.
 {
-	console.log('running game');
-	populateForm();																																// Appends question number, radio buttons, & answers to form in index.html.
-	checkUsersAnswer();
-}
+	$('#quiz_form').submit(function(event)
+	{
+		//console.log('in submit');
+		event.preventDefault();
+
+    console.log(typeof input);
+		userInput = input.val();                                                    // Takes in user's guess and stores as userInput.
+    console.log(typeof userInput);
+    userGuess = parseInt(userInput);                                            // Takes userInput and converts from string to integer.
+		console.log(typeof userGuess);
+		checkUsersAnswer();                                                         // Calls checkUsersAnswer function.
+	})
+};
 
 // ###########################################################
 /* ----------------- populateForm Function ---------------- */
 // ###########################################################
 
-function populateForm()
+function populateForm()                                                         // Uses the contructor function & prototypes in constructors.js to build & append form content.
 {
+  // console.log('running game');
 	myQuestions = new QuestionList(QuizBank);																			// Creates new object 'myQuestions' from the prototype of object 'QuizBank'.
   myQuestions.fetchCurrentQuestion();																						// Fetches current question in array (object) 'QuizBank'.
 };
@@ -102,13 +119,9 @@ function populateForm()
 /* ----------------- checkUsersAnswer Function ---------------- */
 // ###############################################################
 
-function checkUsersAnswer()
+function checkUsersAnswer()                                                     // Function handles the validation checks of the user's input or lack there of.
 {
-  $('#btn_submit').click(function()
-  {
-		if (myQuestions.currentQuestion !== undefined)															// This will keep the quiz from continuing to iterate through the array after it's data is all used.
-		{
-			userGuess=$('input:checked').val();
+			userGuess=$('input[name=answer]:checked').val();
 			console.log(userGuess);
 			if (userGuess == undefined)																								// User did not select an option.
 	    {
@@ -122,7 +135,7 @@ function checkUsersAnswer()
 	      userFeedback.fadeOut(1000);																							// Fade prompt out.
 	      kansasScore++;																													// Iterate Kansas Score by 1.
 	      $('.kansas').text(kansasScore);																					// Print iteration to .kansas in index.html.
-				nextQuestion();																													// Advance to next question.
+				nextQuestion();																													// Calls nextQuestion function.
 	    }
 	    else if (userGuess != myQuestions.currentQuestion.correctAnswerIndex)			// User's guess does not match correctAnswerIndex.
 	    {
@@ -131,57 +144,72 @@ function checkUsersAnswer()
 				userFeedback.fadeOut(1000);																							// Fade prompt out.
 				mizzouScore++;																													// Iterate Mizzou Score by 1.
 				$('.mizzou').text(mizzouScore);																					// Print iteration to .mizzou in index.html.
-				nextQuestion();																													// Advance to next question.
+				nextQuestion();																													// Calls nextQuestion function.
 	    }
-		}
-
-  })
 };
 
 // ###########################################################
 /* ----------------- nextQuestion Function ---------------- */
 // ###########################################################
 
-function nextQuestion()
+function nextQuestion()                                                         // Uses the constructor function & prototypes in constructors.js to index the array and fetch next data set.
 {
 	myQuestions.nextIndex();																							      	// Iterate +1 in QuizBank array.
-	myQuestions.fetchCurrentQuestion();																				    // Fetch next question in QuizBank array.
+	if(myQuestions.fetchCurrentQuestion() == false)																// Fetch next question in QuizBank array until argument yields FALSE.
+	{
+		setTimeout(function()																												// Timeout function for adding 1.5 second delay between the user feedback prompt and highscore_container being visible.
+		{
+  		highScore();																															// Calls highScore function.
+		}, delay);
+	}
 };
 
-function resetForm()
+// ########################################################
+/* ----------------- highScore Function ---------------- */
+// ########################################################
+
+function highScore()                                                            // Alternates display between quiz_container & highscore_container. Yields 'New Game' button.
 {
-
+	$('#highscore_container').show();                                             // Shows highscore_container.
+	$('#quiz_container').hide();                                                  // Hides quiz_container.
+	$('#welcome').hide();                                                         // Hides Welcome Page.
+	newGame();                                                                    // Calls newGame function.
 };
 
-// function counter()
-// {
-// 	counter++;
-// };
+// ######################################################
+/* ----------------- newGame Function ---------------- */
+// ######################################################
+
+function newGame()                                                              // Alternates display between highscore_container & quiz_container. Resets the form and runs the game.
+{
+	$('#btn_new').click(function()                                                // Event handler for user interaction with 'New Game' button.
+	{
+    $('#highscore_container').hide();                                           // Hides highscore_container.
+		$('#quiz_container').show();                                                // Shows quiz_container.
+    resetForm();                                                                // Calls resetForm function.
+		populateForm();                                                             // Calls populateForm function.
+  });
+};
+
+// ########################################################
+/* ----------------- resetForm Function ---------------- */
+// ########################################################
+
+function resetForm()																														// Resets form data.
+{
+	kansasScore = 0;																															// Resets kansasScore variable to 0.
+	mizzouScore = 0;																															// Resets mizzouScore variable to 0.
+	$('.kansas').text(0);																													// Resets text value in .kansas to 0.
+	$('.mizzou').text(0);																													// Resets text value in .mizzou to 0.
+	myQuestions.reset();																													// Resets 'this.current' position in array 'QuizBank' to 0.
+	myQuestions.fetchCurrentQuestion();																						// Fetches first element in array stored in 'this.current' (question #1, stored at postion [0] in array 'QuizBank').
+};
+
+// #########################################################
+/* ----------------- scoreBoard Function ---------------- */
+// #########################################################
 
 // function scoreBoard()
 // {
 //
 // };
-
-
-
-function highScore()
-{
-	$('#highscore_container').show();
-	$('#quiz_container').hide();
-	$('#welcome').hide();
-	newGame();
-};
-
-function newGame()
-{
-	$('#btn_new').click(function()
-	{
-        $('#highscore_container').hide();
-        resetForm();
-    });
-};
-
-// ####################################################
-/* ---------------- Sibling Function --------------- */
-// ####################################################
