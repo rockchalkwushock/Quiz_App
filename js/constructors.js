@@ -23,9 +23,9 @@ QuestionList.prototype.reset = function()
 // Function for moving to next question.
 QuestionList.prototype.nextIndex = function()
 {
-	console.log("Moving to next question in array QuizBank.");
+	// console.log("Moving to next question in array QuizBank.");
 	this.current += 1;
-	console.log("Position in array QuizBank: " + this.current);
+	// console.log("Position in array QuizBank: " + this.current);
 };
 
 // Function for fetching the current question in the array(object) 'QuizBank'.
@@ -35,19 +35,19 @@ QuestionList.prototype.fetchCurrentQuestion = function()
 	{
 		this.currentQuestion =  this.questions[this.current];
 
-			console.log('Current question number: ' + this.currentQuestion.id);
+			// console.log('Current question number: ' + this.currentQuestion.id);
 					$('#quiz_form .container').text('');
-	        $('#quiz_form .container').append('<h2> #' + (this.current +1) /* QuizBank.id */ + ": " + this.currentQuestion.text/* QuizBank.text */ + '</h2>');
+	        $('#quiz_form .container').append('<h2> #' + (this.current + 1) + ": " + this.currentQuestion.text/* QuizBank.text */ + '</h2>');
 	        // console.log('question');
-	        $('#quiz_form .container').append("<input type='radio' value='0' name='answer'><span>" + this.currentQuestion.answers[0]/* QuizBank.answer[0] */ + "</span><br/>");
+	        $('#quiz_form .container').append("<input type='radio' value='"+this.currentQuestion.answers[0].id+"' name='answer'><span>" + this.currentQuestion.answers[0].name/* QuizBank.answer[0] */ + "</span><br/>");
 	        // console.log('answer1');
-	        $('#quiz_form .container').append("<input type='radio' value='1' name='answer'><span>" + this.currentQuestion.answers[1]/* QuizBank.answer[1] */ + "</span><br/>");
+	        $('#quiz_form .container').append("<input type='radio' value='"+this.currentQuestion.answers[1].id+"' name='answer'><span>" + this.currentQuestion.answers[1].name/* QuizBank.answer[1] */ + "</span><br/>");
 	        // console.log('answer2');
-	        $('#quiz_form .container').append("<input type='radio' value='2' name='answer'><span>" + this.currentQuestion.answers[2]/* QuizBank.answer[2] */ + "</span><br/>");
+	        $('#quiz_form .container').append("<input type='radio' value='"+this.currentQuestion.answers[2].id+"' name='answer'><span>" + this.currentQuestion.answers[2].name/* QuizBank.answer[2] */ + "</span><br/>");
 	        // console.log('answer3');
-	        $('#quiz_form .container').append("<input type='radio' value='3' name='answer'><span>" + this.currentQuestion.answers[3]/* QuizBank.answer[3] */ + "</span><br/>");
+	        $('#quiz_form .container').append("<input type='radio' value='"+this.currentQuestion.answers[3].id+"' name='answer'><span>" + this.currentQuestion.answers[3].name/* QuizBank.answer[3] */ + "</span><br/>");
 	        // console.log('answer4');
-	        $('#quiz_form .container').append("<input type='radio' value='4' name='answer'><span>" + this.currentQuestion.answers[4]/* QuizBank.answer[4] */ + "</span>");
+	        $('#quiz_form .container').append("<input type='radio' value='"+this.currentQuestion.answers[4].id+"' name='answer'><span>" + this.currentQuestion.answers[4].name/* QuizBank.answer[4] */ + "</span>");
 	        // console.log('answer5');
 					//quiz_form.button').append(<button type="submit" name="button">Submit</button>)
 					return true;
@@ -62,6 +62,24 @@ QuestionList.prototype.shuffle = function()                                     
 {
   var input = this.questions;                                                   // Will point to our array.
 
+  //to shuffle answers, go every question
+  for (var j = 0; j < input.length; j++)
+  {
+      //go every answers
+      var answers = input[j].answers;
+      console.log(answers);
+      for (var i = answers.length - 1; i >= 0; i--)                                   // The variable i represents the current element in the array,
+      {
+        //console.log(answers);                                                                          // we are starting at the end of the array and decrementing.
+        var randomIndex = Math.floor(Math.random()*(i+1));                          // Randomization code.
+        var itemAtIndex = answers[randomIndex];                                       // Randomly accesses an element in the array preceding (& including) where i currently sits in the array.
+
+        answers[randomIndex] = answers[i];                                              // Whatever i was at it's current position in the array, swap places with the randomly chosen element.
+        answers[i] = itemAtIndex;                                                     // This is the swap for i for i @ the random index. (i.e. a to z & z to a)
+      }
+  }
+
+  //shuffle questions
   for (var i = input.length - 1; i >= 0; i--)                                   // The variable i represents the current element in the array,
   {                                                                             // we are starting at the end of the array and decrementing.
     var randomIndex = Math.floor(Math.random()*(i+1));                          // Randomization code.
@@ -70,5 +88,6 @@ QuestionList.prototype.shuffle = function()                                     
     input[randomIndex] = input[i];                                              // Whatever i was at it's current position in the array, swap places with the randomly chosen element.
     input[i] = itemAtIndex;                                                     // This is the swap for i for i @ the random index. (i.e. a to z & z to a)
   }
+
   return input;                                                                 // return the scrambled array.
 }

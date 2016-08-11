@@ -95,11 +95,11 @@ function buttonAction()                                                         
 		//console.log('in submit');
 		event.preventDefault();
 
-    console.log(typeof input);
+    // console.log(typeof input);
 		userInput = input.val();                                                    // Takes in user's guess and stores as userInput.
-    console.log(typeof userInput);
+    // console.log(typeof userInput);
     userGuess = parseInt(userInput);                                            // Takes userInput and converts from string to integer.
-		console.log(typeof userGuess);
+		// console.log(typeof userGuess);
 		checkUsersAnswer();                                                         // Calls checkUsersAnswer function.
 	})
 };
@@ -111,7 +111,7 @@ function buttonAction()                                                         
 function populateForm()                                                         // Uses the contructor function & prototypes in constructors.js to build & append form content.
 {
   // console.log('running game');
-	myQuestions = new QuestionList(QuizBank);																			// Creates new object 'myQuestions' from the prototype of object 'QuizBank'.	
+	myQuestions = new QuestionList(QuizBank);																			// Creates new object 'myQuestions' from the prototype of object 'QuizBank'.
 	myQuestions.shuffle()																													// Randomizes the order of the array holding the questions.
   myQuestions.fetchCurrentQuestion();																						// Fetches current question in array (object) 'QuizBank'.
 };
@@ -123,7 +123,7 @@ function populateForm()                                                         
 function checkUsersAnswer()                                                     // Function handles the validation checks of the user's input or lack there of.
 {
 			userGuess=$('input[name=answer]:checked').val();
-			console.log(userGuess);
+			// console.log(userGuess);
 			if (userGuess == undefined)																								// User did not select an option.
 	    {
 	      // no input from user
@@ -203,6 +203,7 @@ function resetForm()																														// Resets form data.
 	$('.kansas').text(0);																													// Resets text value in .kansas to 0.
 	$('.mizzou').text(0);																													// Resets text value in .mizzou to 0.
 	myQuestions.reset();																													// Resets 'this.current' position in array 'QuizBank' to 0.
+	myQuestions.shuffle();
 	myQuestions.fetchCurrentQuestion();																						// Fetches first element in array stored in 'this.current' (question #1, stored at postion [0] in array 'QuizBank').
 };
 
