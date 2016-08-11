@@ -111,7 +111,8 @@ function buttonAction()                                                         
 function populateForm()                                                         // Uses the contructor function & prototypes in constructors.js to build & append form content.
 {
   // console.log('running game');
-	myQuestions = new QuestionList(QuizBank);																			// Creates new object 'myQuestions' from the prototype of object 'QuizBank'.
+	myQuestions = new QuestionList(QuizBank);																			// Creates new object 'myQuestions' from the prototype of object 'QuizBank'.	
+	myQuestions.shuffle()																													// Randomizes the order of the array holding the questions.
   myQuestions.fetchCurrentQuestion();																						// Fetches current question in array (object) 'QuizBank'.
 };
 

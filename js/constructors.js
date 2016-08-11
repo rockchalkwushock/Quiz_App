@@ -37,7 +37,7 @@ QuestionList.prototype.fetchCurrentQuestion = function()
 
 			console.log('Current question number: ' + this.currentQuestion.id);
 					$('#quiz_form .container').text('');
-	        $('#quiz_form .container').append('<h2> #' + this.currentQuestion.id/* QuizBank.id */ + ": " + this.currentQuestion.text/* QuizBank.text */ + '</h2>');
+	        $('#quiz_form .container').append('<h2> #' + (this.current +1) /* QuizBank.id */ + ": " + this.currentQuestion.text/* QuizBank.text */ + '</h2>');
 	        // console.log('question');
 	        $('#quiz_form .container').append("<input type='radio' value='0' name='answer'><span>" + this.currentQuestion.answers[0]/* QuizBank.answer[0] */ + "</span><br/>");
 	        // console.log('answer1');
@@ -56,6 +56,19 @@ QuestionList.prototype.fetchCurrentQuestion = function()
 	{
 		return false;
 	}
-
-
 };
+
+QuestionList.prototype.shuffle = function()                                     // Shuffle function for randomizing elements of an array.
+{
+  var input = this.questions;                                                   // Will point to our array.
+
+  for (var i = input.length - 1; i >= 0; i--)                                   // The variable i represents the current element in the array,
+  {                                                                             // we are starting at the end of the array and decrementing.
+    var randomIndex = Math.floor(Math.random()*(i+1));                          // Randomization code.
+    var itemAtIndex = input[randomIndex];                                       // Randomly accesses an element in the array preceding (& including) where i currently sits in the array.
+
+    input[randomIndex] = input[i];                                              // Whatever i was at it's current position in the array, swap places with the randomly chosen element.
+    input[i] = itemAtIndex;                                                     // This is the swap for i for i @ the random index. (i.e. a to z & z to a)
+  }
+  return input;                                                                 // return the scrambled array.
+}
