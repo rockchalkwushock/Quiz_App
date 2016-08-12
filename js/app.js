@@ -16,12 +16,8 @@
 */
 
 /*
-      Unresolved Issues
+      Unresolved Issues (11AUG2016, CAB)
       1) Still have not included JS for scoreBoard.
-      2) Randomization function for array of questions.
-      3) Randomization function for array of answers.
-      4) Add to QuizBank array. (data.js)
-      5) Clean up & comment constructor. (constructor.js)
 */
 
 
@@ -132,8 +128,8 @@ function checkUsersAnswer()                                                     
 			else if(userGuess == myQuestions.currentQuestion.correctAnswerIndex)			// User's guess matches correctAnswerIndex.
 	    {
 	      // correct answer
-				userFeedback.text("Great Job! That's the correct answer!").fadeIn(1000);// Prompt user with positive feedback by displaying in div #userFeedback
-	      userFeedback.fadeOut(1000);																							// Fade prompt out.
+				userFeedback.text("Great Job! That's the correct answer!").fadeIn(750);	// Prompt user with positive feedback by displaying in div #userFeedback
+	      userFeedback.fadeOut(750);																							// Fade prompt out.
 	      kansasScore++;																													// Iterate Kansas Score by 1.
 	      $('.kansas').text(kansasScore);																					// Print iteration to .kansas in index.html.
 				nextQuestion();																													// Calls nextQuestion function.
@@ -141,8 +137,8 @@ function checkUsersAnswer()                                                     
 	    else if (userGuess != myQuestions.currentQuestion.correctAnswerIndex)			// User's guess does not match correctAnswerIndex.
 	    {
 	      // not correct answer
-				userFeedback.text("You must be from Missouri...").fadeIn(1000);					// Prompt user with negative feedback by displaying in div #userFeedback
-				userFeedback.fadeOut(1000);																							// Fade prompt out.
+				userFeedback.text("You must be from Missouri...").fadeIn(750);					// Prompt user with negative feedback by displaying in div #userFeedback
+				userFeedback.fadeOut(750);																							// Fade prompt out.
 				mizzouScore++;																													// Iterate Mizzou Score by 1.
 				$('.mizzou').text(mizzouScore);																					// Print iteration to .mizzou in index.html.
 				nextQuestion();																													// Calls nextQuestion function.
