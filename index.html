@@ -16,54 +16,89 @@
 </head>
 <body>
 	<!-- Welcome Page -->
-	<div id="welcome" class="container-fluid">
+	<div id="welcome">
 		<div class="jumbotron text-center">
-        	<!-- insert intro. video or alma mater audio clip -->
         	<h1>Welcome to the Quiz</h1>
         </div>
-        <div class="text-center">
+				<form id="info_form" class="form-horizontal info_form" name="form" value="text">
+					<div class="form-group">
+						<!-- <label for="firstname_input">First Name</label> -->
+						<input type="text" class="form-control" id="firstname_input" placeholder="Player First Name.">
+					</div>
+					<div class="form-group">
+						<!-- <label for="lastname_input">Last Name</label> -->
+						<input type="text" class="form-control" id="lastname_input" placeholder="Player Last Name.">
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-default">Enter</button>
+					</div>
+
+				</form>
+        <div class="text-center container-fluid">
             <a id="btn_start" class="btn btn-lg btn-success">Game On!</a>
         </div>
 	</div>
 
-
     <!-- Quiz -->
     	<div = id="quiz_container" class="container">
-	    	<div class="jumbotron text-center">
+	    	<div id="scoreboard" class="jumbotron text-center">
 	        	<!-- insert intro. video or alma mater audio clip -->
-	        	<h1>Picture Here</h1>
-						<h2>Score Box Temporary</h2>
-						<h2>Kansas: <span class="kansas"> 0 </span> </h2>
-						<h2>Mizzou: <span class="mizzou"> 0 </span> </h2>
-	        </div>
-    		<!-- look up Bootstrap for forms -->
-    		<form id="quiz_form" role='form'>
-    			<!-- JS will append radio buttons -->
-    			<!-- JS will append question & corresponding answers -->
-					<div class="container button">
-
-					</div>
-					<button type="submit" name="button">Submit</button>
+						<h2 id="KU">Kansas: <span class="kansas"> 0 </span> </h2>
+						<h2 id="MU">Mizzou: <span class="mizzou"> 0 </span> </h2>
+						<h2>Questions Left: <span class="current_q"></span></h2>
+	      </div>
+    		<!-- Form for Quiz -->
+    		<form id="quiz_form" role='form' class="form-horizontal">
+					<div id="content" class="container-fluid"></div>
+					<button id="btn-submit" class="btn btn-lg btn-success" type="submit" name="button">Submit</button>
     		</form>
-    		<div class="text-center">
-            <!-- <a id="btn_submit" class="btn btn-lg btn-success">Submit</a> -->
-
-        </div>
     	</div>
 
-    <!-- Scoreboard -->
-		<div id="scoreboard_container" class="container">
-			<!-- <div class="container kansas"></div>
-			<div class="container mizzou"></div> -->
-		</div>
-
 		<!-- User Feedback Pop Up -->
-		<div id="userFeedback_container" class="container">
+		<div id="userFeedback_container" class="container-fluid">
 
 		</div>
 
     <!-- Highscore -->
-    	<div id="highscore_container" class="container">
+    	<div id="highscore_container" class="table-responsive">
+				<table class="table table-hover">
+					<tr>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Score</th>
+					</tr>
+					<tr>
+						<td class="first"><!--User's First Name--></td>
+						<td class="last"><!--User's Last Name--></td>
+						<td class="score"><!--User's Score--></td>
+					</tr>
+					<tr>
+						<td>Max</td>
+						<td>Faulkenstein</td>
+						<td>14</td>
+					</tr>
+					<tr>
+						<td>Russell</td>
+						<td>Robinson</td>
+						<td>12</td>
+					</tr>
+					<tr>
+						<td>Brad</td>
+						<td>Witherspoon</td>
+						<td>9</td>
+					</tr>
+					<tr>
+						<td>Drew</td>
+						<td>Gooden</td>
+						<td>8</td>
+					</tr>
+					<tr>
+						<td>J.R.</td>
+						<td>Giddens</td>
+						<td>0</td>
+					</tr>
+				</table>
+
     		<a id="btn_new" class="btn btn-lg btn-success">New Game</a>
     	</div>
 

@@ -1,6 +1,59 @@
 *
 {
-	margin: 1em;
-	/*padding: .5em;*/
-};
+	color: black;
+}
 
+html, body
+{
+	height: 100%;
+}
+
+html
+{
+	display: table;
+	margin: auto;
+	background-image: url(http://img.wallpaperfolder.com/f/5DDA93A7413E/kansas-logo-ncaa-basketball-free.jpg);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+body
+{
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	color: white;
+	letter-spacing: 1px;
+	background: none;
+}
+
+#welcome, .jumbotron, #id_form, .form-group
+{
+	background: none;
+}
+
+
+#KU
+{
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+span
+{
+	font-size: 1.5em;
+}

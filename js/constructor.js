@@ -61,18 +61,18 @@ QuestionList.prototype.fetchCurrentQuestion = function()												// Function 
 		this.currentQuestion =  this.questions[this.current];												// Access the total length of QuizBank[ ] at current object.
 
 			// console.log('Current question number: ' + this.currentQuestion.id);
-					$('#quiz_form .container').text('');																	// Keeps previous Q&A's from staying visible on the form.
-	        $('#quiz_form .container').append('<h2> #' + (this.current + 1) + ": " + this.currentQuestion.text/* QuizBank[ ].text */ + '</h2>');
+					$('#quiz_form .container-fluid').text('');																	// Keeps previous Q&A's from staying visible on the form.
+	        $('#quiz_form .container-fluid').append('<h2> #' + (this.current + 1) + ": " + this.currentQuestion.text/* QuizBank[ ].text */ + '</h2>');
 	        // console.log('question');
-	        $('#quiz_form .container').append("<input type='radio' value='"+this.currentQuestion.answers[0].id+"' name='answer'><span>" + this.currentQuestion.answers[0].name/* QuizBank[ ].answer[0].name */ + "</span><br/>");
+	        $('#quiz_form .container-fluid').append("<input type='radio' value='"+this.currentQuestion.answers[0].id+"' name='answer'><span>" + this.currentQuestion.answers[0].name/* QuizBank[ ].answer[0].name */ + "</span><br/>");
 	        // console.log('answer1');
-	        $('#quiz_form .container').append("<input type='radio' value='"+this.currentQuestion.answers[1].id+"' name='answer'><span>" + this.currentQuestion.answers[1].name/* QuizBank[ ].answer[1].name */ + "</span><br/>");
+	        $('#quiz_form .container-fluid').append("<input type='radio' value='"+this.currentQuestion.answers[1].id+"' name='answer'><span>" + this.currentQuestion.answers[1].name/* QuizBank[ ].answer[1].name */ + "</span><br/>");
 	        // console.log('answer2');
-	        $('#quiz_form .container').append("<input type='radio' value='"+this.currentQuestion.answers[2].id+"' name='answer'><span>" + this.currentQuestion.answers[2].name/* QuizBank[ ].answer[2].name */ + "</span><br/>");
+	        $('#quiz_form .container-fluid').append("<input type='radio' value='"+this.currentQuestion.answers[2].id+"' name='answer'><span>" + this.currentQuestion.answers[2].name/* QuizBank[ ].answer[2].name */ + "</span><br/>");
 	        // console.log('answer3');
-	        $('#quiz_form .container').append("<input type='radio' value='"+this.currentQuestion.answers[3].id+"' name='answer'><span>" + this.currentQuestion.answers[3].name/* QuizBank[ ].answer[3].name */ + "</span><br/>");
+	        $('#quiz_form .container-fluid').append("<input type='radio' value='"+this.currentQuestion.answers[3].id+"' name='answer'><span>" + this.currentQuestion.answers[3].name/* QuizBank[ ].answer[3].name */ + "</span><br/>");
 	        // console.log('answer4');
-	        $('#quiz_form .container').append("<input type='radio' value='"+this.currentQuestion.answers[4].id+"' name='answer'><span>" + this.currentQuestion.answers[4].name/* QuizBank[ ].answer[4].name */ + "</span>");
+	        $('#quiz_form .container-fluid').append("<input type='radio' value='"+this.currentQuestion.answers[4].id+"' name='answer'><span>" + this.currentQuestion.answers[4].name/* QuizBank[ ].answer[4].name */ + "</span>");
 	        // console.log('answer5');
 					return true;
 	}
