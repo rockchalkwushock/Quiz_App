@@ -5,22 +5,24 @@
 *	2)	Parent Function
 *	3)	initLoad Function
 *	4)	welcome Function
-*	5)	buttonAction Function
-*	6)	populateForm Function
-*	7)	checkUsersAnswer Function
-*	8)	nextQuestion Function
-*	9)	highScore Function
-*	10)	newGame Function
-* 11)	resetForm Function
-* 12)	scoreBoard Function
-* 13) takeInNames Function
-* 14) dataToTable Function
-* 15) validateInfoForm Function
+*	5)	populateForm Function
+*	6)	takeInNames Function
+*	7)	validateInfoForm Function
+*	8)	buttonAction Function
+*	9)	checkUsersAnswer Function
+*	10)	nextQuestion Function
+* 11)	highScore Function
+* 12)	dataToTable Function
+* 13) newGame Function
+* 14) resetForm Function
 */
 
 /*
-      Unresolved Issues ()
-      1)
+      Unresolved Issues (16AUG2016, CAB)
+      1) User feedback
+			2) New Game Button CSS
+			3) Validation of info_form not working
+
 */
 
 
@@ -28,8 +30,10 @@
 /* ---------- Initialization of Global Variables ---------- */
 // ###########################################################
 
-var first_name = $('#firstname_input');																					// Variable represents the input value for user's first name.
-var last_name = $('#lastname_input');																						// Variable represents the input value for user's last name.
+var first_name = $('#firstname_input'); 																				// Variable represents the input value for user's first name.
+var fname;
+var last_name = $('#lastname_input'); 																					// Variable represents the input value for user's last name.
+var lname;
 var input = $('input[name=answer]:checked');        												    // Variable represents the radio button value from user's selection.
 var userInput;                                                                  // Variable represents the stored radio button value as a string.
 var userGuess;                                                                  // Variable represents the stored radio button value as an integer.
@@ -40,7 +44,6 @@ var mizzouScore = 0;																														// Placeholder for losing team
 var delay	= 1500;																																// 1.5 second delay from last user feedback prompt to highscore_container becoming visible.
 var current_num = 16;																														// Total number of questions in the quiz.
 
-
 // ####################################################
 /* ---------------- Parent Function ---------------- */
 // ####################################################
@@ -50,6 +53,7 @@ $(document).ready(initLoad);
 // #######################################################
 /* ----------------- initLoad Function ---------------- */
 // #######################################################
+
 function initLoad()                                                             // Runs the initial load of content to page.
 {
 	// console.log('page load');
@@ -62,11 +66,11 @@ function initLoad()                                                             
 /* ----------------- welcome Function ---------------- */
 // ######################################################
 
-function welcome()
+function welcome()                                                              // Presents Welcome Page and interaction for user to move to Quiz.
 {
 	$('#welcome').show();																													// Shows Welcome Page.
 	// console.log('welcome page visible');
-	$('#btn_start').show();																												// Shows button on Welcome Page that will start the quiz.
+	$('#btn_start').hide();																												// Hides button on Welcome Page that will start the quiz.
 	// console.log('start quiz btn visible');
 	$('#quiz_container').hide();																									// Hides the quiz_container.
 	// console.log('quiz container hidden');
@@ -84,6 +88,61 @@ function welcome()
 		// console.log('quiz container visible');
 		populateForm();                                                             // Call populateForm function.
 	});
+};
+
+// ###########################################################
+/* ----------------- populateForm Function ---------------- */
+// ###########################################################
+
+function populateForm()                                                         // Uses the contructor function & prototypes in constructors.js to build & append form content.
+{
+  // console.log('running game');
+	myQuestions = new QuestionList(QuizBank);																			// Creates new object 'myQuestions' from the prototype of object 'QuizBank'.
+	myQuestions.shuffle()																													// Randomizes the order of the array holding the questions.
+  myQuestions.fetchCurrentQuestion();																						// Fetches current question in array (object) 'QuizBank'.
+	$('.current_q').text(current_num);
+};
+
+// ##########################################################
+/* ----------------- takeInNames Function ---------------- */
+// ##########################################################
+
+function takeInNames()																													// Takes in data from #info_form in index.html
+{
+	$('#info_form').submit(function(event)
+	{
+		event.preventDefault();
+
+		fname = first_name.val();																										// Stores user's first name as first_name variable.
+		lname = last_name.val();																										// Stores user's last name as last_name variable.
+		console.log(fname);
+		console.log(lname);
+		first_name.val('');																													// Clears input field.
+		last_name.val('');
+		validateInfoForm();																													// Calls validateInfoForm function.
+	})
+};
+
+// ###############################################################
+/* ----------------- validateInfoForm Function ---------------- */
+// ###############################################################
+
+function validateInfoForm()																											// Runs validation checks against user input for info_form.
+{
+	if (document.form.name.value == 0)																						// If the user's input is undefined (no entry) alert them to enter their name.
+	{
+		alert("Enter your first & last name!");
+		document.form.name.focus();
+		return false;
+	};
+	if (!/^[a-zA-Z]*$/g.test(document.form.name.value) )													// If the user's input is anything but alphabetic characters alert them.
+	{
+		alert("Invalid characters!");
+		document.form.name.focus();
+		return false;
+	};
+	$('#info_form').hide();																												// Hide #info_form.
+	$('#btn_start').show();																												// Show #btn_start.
 };
 
 // ###########################################################
@@ -106,19 +165,6 @@ function buttonAction()                                                         
 	})
 };
 
-// ###########################################################
-/* ----------------- populateForm Function ---------------- */
-// ###########################################################
-
-function populateForm()                                                         // Uses the contructor function & prototypes in constructors.js to build & append form content.
-{
-  // console.log('running game');
-	myQuestions = new QuestionList(QuizBank);																			// Creates new object 'myQuestions' from the prototype of object 'QuizBank'.
-	myQuestions.shuffle()																													// Randomizes the order of the array holding the questions.
-  myQuestions.fetchCurrentQuestion();																						// Fetches current question in array (object) 'QuizBank'.
-	$('.current_q').text(current_num);
-};
-
 // ###############################################################
 /* ----------------- checkUsersAnswer Function ---------------- */
 // ###############################################################
@@ -135,21 +181,25 @@ function checkUsersAnswer()                                                     
 			else if(userGuess == myQuestions.currentQuestion.correctAnswerIndex)			// User's guess matches correctAnswerIndex.
 	    {
 	      // correct answer
-				userFeedback.text("Great Job! That's the correct answer!").fadeIn(750);	// Prompt user with positive feedback by displaying in div #userFeedback
-	      userFeedback.fadeOut(750);																							// Fade prompt out.
-	      kansasScore++;																													// Iterate Kansas Score by 1.
+				$('#content').hide();																										// Hides the quiz_container.
+				// userFeedback.text("Great Job! That's the correct answer!").fadeIn(750);	// Prompt user with positive feedback by displaying in div #userFeedback
+	      // userFeedback.fadeOut(750);																							// Fade prompt out.
+				kansasScore++;																													// Iterate Kansas Score by 1.
 	      $('.kansas').text(kansasScore);																					// Print iteration to .kansas in index.html.
 				nextQuestion();																													// Calls nextQuestion function.
-	    }
+				$('#content').fadeIn(1600);																							// FadeIn to the quiz_container.
+		  }
 	    else if (userGuess != myQuestions.currentQuestion.correctAnswerIndex)			// User's guess does not match correctAnswerIndex.
 	    {
 	      // not correct answer
-				userFeedback.text("You must be from Missouri...").fadeIn(750);					// Prompt user with negative feedback by displaying in div #userFeedback
-				userFeedback.fadeOut(750);																							// Fade prompt out.
+				$('#content').hide();																										// Hides the quiz_container.
+				// userFeedback.text("You must be from Missouri...").fadeIn(750);					// Prompt user with negative feedback by displaying in div #userFeedback
+				// userFeedback.fadeOut(750);																							// Fade prompt out.
 				mizzouScore++;																													// Iterate Mizzou Score by 1.
 				$('.mizzou').text(mizzouScore);																					// Print iteration to .mizzou in index.html.
 				nextQuestion();																													// Calls nextQuestion function.
-	    }
+				$('#content').fadeIn(1600);																							// FadeIn to the quiz_container.
+			}
 };
 
 // ###########################################################
@@ -184,6 +234,20 @@ function highScore()                                                            
 	newGame();                                                                    // Calls newGame function.
 };
 
+// ###########################################################
+/* ----------------- dataToTable Function ---------------- */
+// ###########################################################
+
+function dataToTable()																													// Sends user's name inputs & score to the table in #highscore_container.
+{
+	$('.first').text(fname);
+	console.log(fname);
+	$('.last').text(lname);
+	console.log(lname);
+	$('.score').text(kansasScore);
+	// console.log(kansasScore);
+};
+
 // ######################################################
 /* ----------------- newGame Function ---------------- */
 // ######################################################
@@ -213,58 +277,4 @@ function resetForm()																														// Resets form data.
 	myQuestions.reset();																													// Resets 'this.current' position in array 'QuizBank' to 0.
 	myQuestions.shuffle();
 	myQuestions.fetchCurrentQuestion();																						// Fetches first element in array stored in 'this.current' (question #1, stored at postion [0] in array 'QuizBank').
-};
-
-// ##########################################################
-/* ----------------- takeInNames Function ---------------- */
-// ##########################################################
-
-function takeInNames()																													// Takes in data from #info_form in index.html
-{
-	$('#info_form').submit(function(event)
-	{
-		event.preventDefault();
-
-		f_name = first_name.val();																									// Stores user's first name as f_name variable.
-		l_name = last_name.val();																										// Stores user's last name as l_name variable.
-		console.log(f_name);
-		console.log(l_name);
-		first_name.val('');																													// Clears input field.
-		last_name.val('');
-		validateInfoForm();																													// Calls validateInfoForm function.
-	})
-};
-
-// ###############################################################
-/* ----------------- validateInfoForm Function ---------------- */
-// ###############################################################
-
-function validateInfoForm()																											// Runs validation checks against user input for info_form.
-{
-	if (document.form.name.value == undefined)																		// If the user's input is undefined (no entry) alert them to enter their name.
-	{
-		alert("Enter your first & last name!");
-		document.form.name.focus();
-		return false;
-	};
-	if (!/^[a-zA-Z]*$/g.test(document.form.name.value) )													// If the user's input is anything but alphabetic characters alert them.
-	{
-		alert("Invalid characters!");
-		document.form.name.focus();
-		return false;
-	};
-};
-
-// ###########################################################
-/* ----------------- namesToTable Function ---------------- */
-// ###########################################################
-
-function dataToTable()																													// Sends user's name inputs & score to the table in #highscore_container.
-{
-	$('.first').text(f_name);
-	// console.log(f_name);
-	$('.last').text(l_name);
-	// console.log(l_name);
-	$('.score').text(kansasScore);
-	// console.log(kansasScore);
 };

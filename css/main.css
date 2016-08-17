@@ -34,26 +34,58 @@ body
 	background: none;
 }
 
-
-#KU
-{
-	
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 span
 {
 	font-size: 1.5em;
+}
+
+#welcome, #highscore_container, #quiz_form, #scoreboard, #userFeedback_container
+{
+	background-color: white;
+	opacity: .75;
+	border-radius: 2em;
+}
+
+#btn-submit, #btn_new
+{
+	opacity: 1;
+	margin-bottom: 1em;
+}
+
+.answer
+{
+	margin-left: 0.5em;
+}
+
+#content, #highscore_container
+{
+	text-align: left;
+}
+
+#scoreboard
+{
+	padding: 0;
+}
+
+#Questions
+{
+	padding-bottom: 1em;
+	margin-bottom: 0;
+}
+
+.jumbotron h1
+{
+	color: black;
+}
+
+#welcome
+{
+	padding: 2em;
+}
+
+#firstname_input, #lastname_input
+{
+	border-style: solid;
+	border-width: 2px;
+	border-color: black;
 }
