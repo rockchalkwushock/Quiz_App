@@ -28,7 +28,7 @@ function QuestionList(questions)																								// Constructor function 
 {
 	this.current = 0;
 	this.questions = questions;																										// QuizBank[ ] will be passed as a parameter to QuestionList( )
-};																																							// this. = QuizBank[ ]
+}																																							// this. = QuizBank[ ]
 
 // #####################################################
 /* ----------------- .reset Function ---------------- */
@@ -103,18 +103,18 @@ QuestionList.prototype.shuffle = function()																			// Shuffle functio
 																																								// i.e. if i = answers[4] 0-4 are possible random index points. i (current element) can retain the same position.
         answers[randomIndex] = answers[i];                                      // Whatever i was at it's current position in the array, swap places with the randomly chosen element (or remain the same).
         answers[i] = itemAtIndex;                                               // This is the swap for i(current element) for random value itemAtIndex, (i.e. a to z & z to a) or (i = i if no change).
-      };
-  };
+      }
+  }
 
   // Scramble QuizBank[ ].
-  for (var i = input.length - 1; i >= 0; i--)                                   // The variable i represents the current element in QuizBank[ ],
+  for (var k = input.length - 1; k >= 0; k--)                                   // The variable k represents the current element in QuizBank[ ],
   {                                                                             // we are starting at the end of the array (QuizBank[14]) and decrementing.
-    var randomIndex = Math.floor(Math.random()*(i+1));                          // Randomization code.
-    var itemAtIndex = input[randomIndex];                                       // Randomly accesses an element in QuizBank[ ], preceding (& including), where i currently sits in the array;
-																																								// i.e. if i = QuizBank[14] 0-14 are possible random index points. i (current element) can retain the same position.
-    input[randomIndex] = input[i];                                              // Whatever i was at it's current position in the array, swap places with the randomly chosen element (or remain the same).
-    input[i] = itemAtIndex;                                                     // This is the swap for i(current element) for random value itemAtIndex, (i.e. a to z & z to a) or (i = i if no change).
+    var randomIndex = Math.floor(Math.random()*(k+1));                          // Randomization code.
+    var itemAtIndex = input[randomIndex];                                       // Randomly accesses an element in QuizBank[ ], preceding (& including), where k currently sits in the array;
+																																								// i.e. if k = QuizBank[14] 0-14 are possible random index points. k (current element) can retain the same position.
+    input[randomIndex] = input[k];                                              // Whatever k was at it's current position in the array, swap places with the randomly chosen element (or remain the same).
+    input[k] = itemAtIndex;                                                     // This is the swap for k(current element) for random value itemAtIndex, (i.e. a to z & z to a) or (k = k if no change).
   }
 
   return input;                                                                 // return the scrambled answers[ ] for all 14 objects of QuizBank[ ] as well as scrambled order of objects in QuizBank[ ].
-}
+};
